@@ -18,7 +18,7 @@ lemma T_ASSERT[vcg_simp_rules]: "Some t \<le> lst (ASSERT \<Phi>) Q \<longleftri
   apply (cases \<Phi>)
    apply vcg'
   done
-lemma T_ASSERT_I: "Some t \<le> Q () \<Longrightarrow> \<Phi> \<Longrightarrow> Some t \<le> lst (ASSERT \<Phi>) Q"
+lemma T_ASSERT_I: "(\<Phi> \<Longrightarrow> Some t \<le> Q ()) \<Longrightarrow> \<Phi> \<Longrightarrow> Some t \<le> lst (ASSERT \<Phi>) Q"
   by(simp add: T_ASSERT T_RETURNT) 
 
 
