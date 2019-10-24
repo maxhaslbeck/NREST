@@ -8,3 +8,4 @@ session NREST = HOL +
   theories
     "NREST"
     RefineMonadicVCG
+    Refine_Foreach
