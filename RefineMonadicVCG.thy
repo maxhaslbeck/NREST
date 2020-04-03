@@ -43,8 +43,9 @@ lemma T_SPECT_I: "(Some (t' + t ) \<le> Q x)
 lemma mm2_map_option: "Some (t'+t) \<le> mm2 (Q x) (x2 x)
   \<Longrightarrow> Some t' \<le> mm2 (Q x) (map_option ((+) t) (x2 x)) "
   apply(cases "Q x")
-  apply (auto simp: mm2_def  split: option.splits if_splits)
-  subgoal by (metis enat_plus_minus_aux2 leD le_iff_add less_le_trans linordered_field_class.sign_simps(2) linordered_field_class.sign_simps(3)) 
+   apply (auto simp: mm2_def  split: option.splits if_splits)
+  subgoal
+    by (metis add.commute dual_order.trans enat_plus_minus_aux2 leD le_iff_add)
   subgoal by (smt add.commute add.left_commute enat_plus_minus_aux1 enat_plus_minus_aux2)  
   done
 
