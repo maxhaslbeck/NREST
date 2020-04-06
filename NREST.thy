@@ -253,7 +253,7 @@ lemma inresT_REST[simp]:
 lemma pw_Sup_nofail[refine_pw_simps]: "nofailT (Sup X) \<longleftrightarrow> (\<forall>x\<in>X. nofailT x)"
   apply (cases "Sup X")  
    apply auto unfolding Sup_nrest_def apply (auto split: if_splits)
-  apply force unfolding nofailT_def apply(force simp add: nres_simp_internals)
+  apply force unfolding nofailT_def apply force
   done
 
 
@@ -339,7 +339,7 @@ lemma bindT_alt: "bindT M f = (case M of
 
 
 lemma "bindT (REST X) f = 
-  (SUP x:dom X. consume (f x) (the (X x)))"
+  (\<Squnion>x \<in> dom X. consume (f x) (the (X x)))"
 proof -
   have *: "\<And>f X. { f x t |x t. X x = Some t}
       = (\<lambda>x. f x (the (X x))) ` (dom X)"
@@ -1461,23 +1461,23 @@ structure Refine = struct
 
 end;
 \<close>
-setup {* Refine.vcg.setup *}
-setup {* Refine.vcg_cons.setup *}
-setup {* Refine.refine0.setup *}
-setup {* Refine.refine.setup *}
-setup {* Refine.refine2.setup *}
+setup \<open>Refine.vcg.setup\<close>
+setup \<open>Refine.vcg_cons.setup\<close>
+setup \<open>Refine.refine0.setup\<close>
+setup \<open>Refine.refine.setup\<close>
+setup \<open>Refine.refine2.setup\<close>
 (*setup {* Refine.refine_post.setup *}*)
 
 method_setup refine_rcg = 
-  {* Attrib.thms >> (fn add_thms => fn ctxt => SIMPLE_METHOD' (
+  \<open>Attrib.thms >> (fn add_thms => fn ctxt => SIMPLE_METHOD' (
     Refine.rcg_tac add_thms ctxt THEN_ALL_NEW_FWD (TRY o Refine.post_tac ctxt)
-  )) *} 
+  ))\<close> 
   "Refinement framework: Generate refinement conditions"     
 
 method_setup refine_vcg = 
-  {* Attrib.thms >> (fn add_thms => fn ctxt => SIMPLE_METHOD' (
+  \<open>Attrib.thms >> (fn add_thms => fn ctxt => SIMPLE_METHOD' (
     Refine.rcg_tac (add_thms @ Refine.vcg.get ctxt) ctxt THEN_ALL_NEW_FWD (TRY o Refine.post_tac ctxt)
-  )) *} 
+  ))\<close> 
   "Refinement framework: Generate refinement and verification conditions"
 
 end
