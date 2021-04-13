@@ -1117,8 +1117,7 @@ proof -
         apply(cases "Q' x") apply simp
         apply auto 
         apply(cases "Q x") apply auto 
-        subgoal for a b c apply(cases t; cases t'; cases a; cases b; cases c) apply auto
-          using le_add2 by force
+        subgoal for a b c apply(cases t; cases t'; cases a; cases b; cases c) by auto
         done
       done
   } 
