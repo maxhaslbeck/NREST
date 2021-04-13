@@ -372,7 +372,7 @@ lemma bindT_refine':
   using assms
   apply (simp add: pw_le_iff refine_pw_simps)  
   by blast
-
+thm refine_pw_simps
 lemma bindT_refine:
   fixes R' :: "('a\<times>'b) set" and R::"('c\<times>'d) set"
   assumes R1: "M \<le> \<Down> R' M'"

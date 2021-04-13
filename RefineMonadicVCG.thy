@@ -357,7 +357,7 @@ lemma
     apply(cases "I s"; simp)
     subgoal for ti
       using IS[of s ti]  
-      apply (cases "c s"; simp) 
+      apply (cases "c s") apply(simp) 
       subgoal for M
         using progress[of s, THEN progressD, of M]
         apply(auto simp: T_pw) 

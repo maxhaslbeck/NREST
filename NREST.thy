@@ -273,6 +273,59 @@ lemma pw_le_iff:
   apply (metis option.distinct(1) zero_enat_def zero_le)
   by (smt Suc_ile_eq enat.exhaust linorder_not_le option.simps(1) order_refl) 
 
+
+lemma "S\<le>S' \<Longrightarrow> inresT S x t \<Longrightarrow> inresT S' x t"
+  unfolding inresT_alt by auto
+
+lemma pw_le_iff_nice: 
+  "S \<le> S' \<longleftrightarrow> (nofailT S'\<longrightarrow> (nofailT S \<and> (\<forall>x t. inresT S x t \<longrightarrow> inresT S' x t)))"
+proof (rule, rule, rule)
+  assume LE: "S \<le> S'"
+  assume NF: "nofailT S'"
+  from LE NF show "nofailT S" unfolding nofailT_def by auto
+  show "\<forall>x t. inresT S x t \<longrightarrow> inresT S' x t"
+  proof (safe)
+    fix x t
+    assume i: "inresT S x t"
+    with LE show "inresT S' x t"
+      unfolding inresT_alt by auto
+  qed
+next
+  assume A: "nofailT S' \<longrightarrow> nofailT S \<and> (\<forall>x t. inresT S x t \<longrightarrow> inresT S' x t)"
+  show "S \<le> S'"
+  proof (cases S')
+    case (REST x2')
+    with A have "nofailT S" and imp: "\<And>x t. inresT S x t \<Longrightarrow> inresT S' x t" unfolding nofailT_def by auto
+    then obtain x2 where "S = REST x2" unfolding nofailT_def using nrest_noREST_FAILT by blast 
+    with REST show ?thesis 
+      apply auto apply(rule le_funI)
+      subgoal for x
+        apply(cases "x2 x") (* x must be an result of S *)
+        subgoal by simp 
+        subgoal apply simp
+        proof (goal_cases)
+          case 1
+          \<comment> \<open>so there must be a time t, such that (x,t) is a valid refinement of S\<close>
+          have "\<exists>t. inresT S x t" unfolding 1 inresT_def using 1(3) apply auto
+            by (metis i0_lb zero_enat_def) 
+          with imp have "\<exists>t. inresT S' x t" by auto
+          then have "x2' x \<noteq> None"
+            unfolding inresT_def 1 by auto
+          then obtain t' where p: "x2' x = Some t'" by auto
+
+          show ?case  unfolding p
+            apply simp
+            apply(cases t')
+            subgoal  sorry
+            subgoal apply simp done
+            done
+        qed
+        done
+      done
+  qed auto
+qed
+
+
 lemma pw_eq_iff:
   "S=S' \<longleftrightarrow> (nofailT S = nofailT S' \<and> (\<forall>x t. inresT S x t \<longleftrightarrow> inresT S' x t))"
   apply (rule iffI)
