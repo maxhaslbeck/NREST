@@ -277,7 +277,7 @@ lemma pw_le_iff:
 lemma "S\<le>S' \<Longrightarrow> inresT S x t \<Longrightarrow> inresT S' x t"
   unfolding inresT_alt by auto
 
-lemma pw_le_iff_nice: 
+(* lemma pw_le_iff_nice: 
   "S \<le> S' \<longleftrightarrow> (nofailT S'\<longrightarrow> (nofailT S \<and> (\<forall>x t. inresT S x t \<longrightarrow> inresT S' x t)))"
 proof (rule, rule, rule)
   assume LE: "S \<le> S'"
@@ -323,7 +323,7 @@ next
         done
       done
   qed auto
-qed
+qed *)
 
 
 lemma pw_eq_iff:
