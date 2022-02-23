@@ -2,9 +2,9 @@ theory
   NREST_Auxiliaries
 imports
   "HOL-Library.Extended_Nat" "Automatic_Refinement.Automatic_Refinement"
-  "HOL-Library.Lattice_Syntax"
 begin
 
+unbundle lattice_syntax
 
 
 
